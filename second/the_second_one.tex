@@ -597,7 +597,7 @@ y_n = B^n y_0 = 0 \Rightarrow x_n = x_*
 
 
 % =============== 题11 ===============
-\question{}设 $A$ 是具有正对角元素的非奇异对称矩阵. 证明:若使用 Gauss-Seidel 迭代方法求解线性方程组 $A\mathbf{x} = \mathbf{b}$ 时, 对任意初始近似 $\mathbf{x}^{(0)}$ 都收敛, 则 $A$ 必为正定矩阵. 
+\question{}设 $A$ 是具有正对角元素的非奇异对称矩阵. 证明: 若求解方程组 $Ax = b$ 的 G-S 迭代法对任意初始近似皆收敛, 则 $A$ 必定是正定的. 
 
 \begin{solution}
 设 $A$ 为对称非奇异矩阵, 且对角元全为正. 令
@@ -668,9 +668,13 @@ y_k^{\T} A y_k \leq y_1^{\T} A y_1 < y_0^{\T} A y_0 \leq 0,\ \forall k \in \N
 \[
 y_k^{\T} A y_k \leq \epsilon' < 0,\ \forall k \in \N
 \]
-另一方面, 由G-S迭代收敛性假设应有
+另一方面, 由G-S迭代收敛性假设应有（$\lambda$指矩阵$A$模长最大的特征值）:
 \[
-\lim_{k \to \infty} y_k^{\T} A y_k = \lim_{k \to \infty} x_k^{\T} A x_k = 0
+\| y_k^{\T} A y_k \|_2 \leq |\lambda| \| y_k \|_2^2 = |\lambda| \| x_k \|_2^2 \rightarrow 0,\ k \rightarrow \infty
+\]
+即
+\[
+\lim_{k \to \infty} y_k^{\T} A y_k = 0
 \]
 矛盾, 故假设不成立, $A$ 必为正定矩阵. 
 \end{enumerate}
@@ -734,13 +738,11 @@ x^{\HH} B x = (u^{\T} - iv^{\T})B(u + iv) = u^{\T} B u + v^{\T} B v > 0
 \end{align*}
 矛盾, 因此 \( \lambda \) 不是 SOR 迭代矩阵 \( L_{\omega} \) 的特征值. 由 \( \lambda \) 的任意性可知, \( L_{\omega} \) 的特征值都满足 \( |\lambda| < 1 \), 从而 SOR 迭代收敛. 
 \anothersolution{}
-SOR迭代法的迭代矩阵为
+下仅证
 \[
-L_{\omega} = (D - \omega L)^{-1}[(1-\omega)D + \omega U]
+|\lambda + \omega - 1| \geq |\lambda| \omega \geq \omega
 \]
-其中 \( A = D - L - U \).
-
-假设 \( \lambda \) 是 \( L_{\omega} \) 的一个特征值且 \( |\lambda| \geq 1 \). 令 \( z = \frac{1}{\lambda} \), 则 \( |z| \leq 1 \). 考虑函数
+令 \( z = \frac{1}{\lambda} \), 则 \( |z| \leq 1 \). 考虑函数
 \[
 f(z) = \frac{\omega}{1 - z(1 - \omega)}
 \]
@@ -760,28 +762,9 @@ f(z) = \frac{\omega}{1 - z(1 - \omega)}
 \]
 代入 \( z = \frac{1}{\lambda} \), 得
 \[
-\left| 1 - \frac{1}{\lambda}(1 - \omega) \right| \geq \omega \quad \Rightarrow \quad |\lambda - (1 - \omega)| \geq \omega |\lambda|
+\left| 1 - \frac{1}{\lambda}(1 - \omega) \right| \geq \omega \quad \Rightarrow \quad |\lambda - (1 - \omega)| \geq |\lambda| \omega
 \]
-
-现在考虑矩阵
-\[
-B = (\lambda + \omega - 1)D - \omega \lambda L - \omega U
-\]
-由特征值定义, \( B \) 奇异. 但另一方面, 我们将证明 \( B \) 是对角占优的, 从而非奇异, 产生矛盾.
-
-对于 \( B \) 的第 \( i \) 行, 有:
-\[
-|b_{ii}| = |\lambda + \omega - 1| \cdot |a_{ii}|, \quad \sum_{j \neq i} |b_{ij}| = \omega |\lambda| \sum_{j < i} |a_{ij}| + \omega \sum_{j > i} |a_{ij}|
-\]
-由前述不等式 \( |\lambda + \omega - 1| \geq \omega |\lambda| \) 及 \( A \) 的对角占优性 \( |a_{ii}| > \sum_{j \neq i} |a_{ij}| \), 可得
-\[
-|b_{ii}| > \omega |\lambda| \sum_{j \neq i} |a_{ij}| \geq \omega |\lambda| \sum_{j < i} |a_{ij}| + \omega \sum_{j > i} |a_{ij}| = \sum_{j \neq i} |b_{ij}|
-\]
-故 \( B \) 严格对角占优, 从而非奇异, 矛盾.
-
-若 \( A \) 不可约对角占优, 则 \( B \) 亦不可约, 且上述不等式在至少一行取严格不等, 故 \( B \) 非奇异, 矛盾.
-
-因此假设 \( |\lambda| \geq 1 \) 不成立, 即 \( \rho(L_{\omega}) < 1 \), SOR迭代法收敛.
+证毕.
 \end{solution}
 
 
@@ -1071,6 +1054,7 @@ x^{\T}(Ax_k-b) = 0, \forall x \in \mathcal{X} \Leftrightarrow r_k \perp \mathcal
 \end{align*}
 即原命题得证. 
 
+\textbf{再另解: }可以考虑内积空间中的投影定理.
 \end{solution}
 
 

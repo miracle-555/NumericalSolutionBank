@@ -1,11 +1,12 @@
+# 忽略以下文件
 *.aux
 *.fdb_latexmk
 *.fls
 *.log
-*.pdf
 *.synctex.gz
-*.synctex(busy)
 *.xdv
 
-.DS_Store
-Thumbs.db
+*the_first_one.pdf
+*the_second_one.pdf
+*the_third_one.pdf
+*README.pdf

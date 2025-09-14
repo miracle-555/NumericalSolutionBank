@@ -27,7 +27,7 @@
 % 标题部分  
 \title{数值线代の题库一}
 \author{by 23大数据miracle}
-\date{\today}
+\date{}
 
 \begin{document}
 
@@ -233,7 +233,7 @@ S_{ii} \left( T_{ii} x_i + \sum_{j=i+1}^{n} T_{ij} x_j \right) + \sum_{j=i+1}^{n
 \[
 x_i = \frac{ b_i - S_{ii} \sum_{j=i+1}^{n} T_{ij} x_j - \sum_{j=i+1}^{n} S_{ij} y_j }{ S_{ii} T_{ii} - \lambda }
 \]
-其中分母 \(S_{ii} T_{ii} - \lambda\) 非零, 因为方程组非奇异. 一旦求得 \(x_i\), 即可继续计算 \(y_i\). 写成算法形式如下:
+其中 \(S_{ii} T_{ii} - \lambda \neq 0 \)（方程组非奇异）. 而一旦求得 \(x_i\), 即可继续计算 \(y_i\). 写成算法如下:
 
 \begin{algorithm}[H]
 \SetKwFunction{FSolve}{[x]=solve}
@@ -558,7 +558,6 @@ a_{11} & a_1^{\T} \\
       & & & \frac{y_n}{1 - y_k} & & & 1
     \end{bmatrix}
     \]
-
     \item 由 \( N(y, k)x = (I - y e_k^{\T})x = e_k \) 可得
     \[
     x - x_k y = e_k
@@ -568,7 +567,6 @@ a_{11} & a_1^{\T} \\
     y = \frac{x - e_k}{x_k} = \left[ \frac{x_1}{x_k}, \ldots, \frac{x_{k-1}}{x_k}, \frac{x_k - 1}{x_k}, \frac{x_{k+1}}{x_k}, \ldots, \frac{x_n}{x_k} \right]^{\T}
     \]
     为保证 \( y \) 存在, 则需 \( x_k \neq 0 \) 即可.
-
     \item 设
     \[
     A = 
@@ -598,10 +596,7 @@ a_{11} & a_1^{\T} \\
     \]
     构造 \( N_k = N(y_k, k) \), 并计算 \( A^{(k)} = N_k A^{(k-1)} \). 经过 \( n \) 步后, 有: 
     \[
-    N_n N_{n-1} \cdots N_1 A = E
-    \]
-    因此
-    \[
+    N_n N_{n-1} \cdots N_1 A = E \Rightarrow
     A^{-1} = N_n N_{n-1} \cdots N_1
     \]
     要保证算法进行到底, 需每一步的 \( a_{kk}^{(k-1)} \neq 0 \), 由课本定理可知即 \( A \) 的所有顺序主子阵非奇异. 具体算法见下:
@@ -669,6 +664,7 @@ l_{ik} = \frac{1}{l_{kk}} \left( a_{ik} - \sum_{j=1}^{k-1} l_{ij} l_{kj} \right)
 
 % =============== 题13 ===============
 \question{}若 \( A = LL^{\T} \) 是 \( A \) 的 Cholesky 分解. 证明: \( L \) 的 \( i \) 阶顺序主子阵 \( L_i \) 正好是 \( A \) 的 \( i \) 阶顺序主子阵 \( A_i \) 的 Cholesky 因子. 
+
 \begin{solution}
 对矩阵进行分块:
 \[
@@ -970,7 +966,7 @@ u = \frac{x}{\|x\|_\alpha} \in S
 \end{enumerate}
 证毕.
 \anothersolution{}
-仅讨论充分性: 可以从对称性、双线性、正定性三个方面证明$\phi(x, y) \triangleq x^{\T}Ay$是$\R^n$上的一个内积, 则$f(x) = \sqrt{\phi(x, x)}$自然就是$\R^n$上的一个向量范数.
+仅讨论充分性: 可以从对称性、双线性性、正定性三个方面证明$\phi(x, y) \triangleq x^{\T}Ay$是$\R^n$上的一个内积, 则$f(x) = \sqrt{\phi(x, x)}$自然就是$\R^n$上的一个向量范数.
 \end{solution}
 
 % =============== 题18 ===============
@@ -1022,7 +1018,7 @@ u = \frac{x}{\|x\|_\alpha} \in S
 \[
 \| A^{-1} \| = \max_{\| y \| = 1} \| A^{-1} y \|
 \]
-由于 \( A \) 非奇异, 映射 \( x \mapsto \frac{A x}{\| A x \|} \) 是从 \(\{x: \|x\|=1\}\) 到 \(\{y: \|y\|=1\}\) 的满射（显然此过程中有$x \not\equiv 0, y \not\equiv 0$）. 因此
+由于 \( A \) 非奇异, 映射 \( x \mapsto \frac{A x}{\| A x \|} \) 是从 \(\{x: \|x\|=1\}\) 到 \(\{y: \|y\|=1\}\) 的满射（显然此过程中有$x \neq 0, y \neq 0$）. 因此
 \[
 \| A^{-1} \| = \max_{\| x \| = 1} \left\| A^{-1} \left( \frac{A x}{\| A x \|} \right) \right\| = \max_{\| x \| = 1} \frac{\| x \|}{\| A x \|} = \max_{\| x \| = 1} \frac{1}{\| A x \|}
 \]
